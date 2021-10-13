@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-import environ
+# import environ
 
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -142,7 +142,6 @@ DJOSER = {
            'user_list': ['rest_framework.permissions.AllowAny']
        },
    }
-
 
 
 # Internationalization

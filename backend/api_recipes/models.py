@@ -64,14 +64,17 @@ class Recipe(models.Model):
                             null=False,
                             verbose_name='Содержание рецепта')
     tags = models.ManyToManyField(Tag,
-                                  through='RecipeTags')
+                                  through='RecipeTags',
+                                  verbose_name='Теги')
     ingredients = models.ManyToManyField(Ingredient,
-                                         through='RecipeIngredients')
+                                         through='RecipeIngredients',
+                                         verbose_name='Ингредиенты')
     cooking_time = models.PositiveIntegerField(
                     validators=[MinValueValidator(1)],
                     verbose_name='Время приготовления')
-    image = models.ImageField(upload_to='images/',
-                              blank=False, null=False,
+    image = models.ImageField(upload_to='api_recipes/images/',
+                              blank=False,
+                              null=False,
                               verbose_name='Иллюстрация блюда')
 
     class Meta:
@@ -84,7 +87,9 @@ class Recipe(models.Model):
 
 
 class RecipeIngredients(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe,
+                               on_delete=models.CASCADE,
+                               verbose_name='Рецепт')
     ingredient = models.ForeignKey(Ingredient,
                                    on_delete=models.PROTECT,
                                    verbose_name='Ингредиент для рецепта')
@@ -100,7 +105,9 @@ class RecipeIngredients(models.Model):
 
 
 class RecipeTags(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe,
+                               on_delete=models.CASCADE,
+                               verbose_name='Рецепт')
     tag = models.ForeignKey(Tag,
                             on_delete=models.CASCADE,
                             verbose_name='Тег для рецепта')
@@ -114,10 +121,12 @@ class RecipeTags(models.Model):
 
 
 class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
                              related_name='favorite',
                              verbose_name='Пользователь')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+    recipe = models.ForeignKey(Recipe,
+                               on_delete=models.CASCADE,
                                related_name='in_favorite',
                                verbose_name='Рецепт')
 

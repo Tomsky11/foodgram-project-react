@@ -5,7 +5,6 @@ from foodgram.pagination import CustomPageNumberPaginator
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .filters import IngredientsFilter, RecipeFilter
 from .models import (Favorite, Ingredient, Recipe, RecipeIngredients,
@@ -47,7 +46,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return ShowRecipeFullSerializer
         return AddRecipeSerializer
 
-    '''
     @action(detail=True, permission_classes=[IsAuthorOrAdmin])
     def favorite(self, request, pk):
         data = {'user': request.user.id, 'recipe': pk}
@@ -75,15 +73,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @shopping_cart.mapping.delete
-    # @action(methods=['DELETE'], detail=True,
-    #        permission_classes=[IsAuthorOrAdmin])
     def delete_shopping_cart(self, request, pk):
         user = request.user
         recipe = get_object_or_404(Recipe, id=pk)
         shopping_list = get_object_or_404(ShoppingList,
                                           user=user, recipe=recipe)
         shopping_list.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)'''
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False, permission_classes=[permissions.IsAuthenticated])
     def download_shopping_cart(self, request):
@@ -118,21 +114,3 @@ def download_file_response(list_to_download, filename):
     response = HttpResponse(list_to_download, 'Content-Type: text/plain')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     return response
-
-
-class FavoriteViewSet(APIView):
-    permission_classes = [IsAuthorOrAdmin, ]
-
-    def get(self, request, pk):
-        data = {'user': request.user.id, 'recipe': pk}
-        serializer = FavoriteSerializer(data=data,
-                                        context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def delete(self, request, pk):
-        user = request.user
-        recipe = get_object_or_404(Recipe, id=pk)
-        Favorite.objects.get(user=user, recipe=recipe).delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -20,7 +20,10 @@ class FollowApiView(APIView):
         serializer = FollowSerializer(data=data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        following = get_object_or_404(User, id=id)
+        serializer_final = ShowFollowSerializer(following,
+                                                context={'request': request})
+        return Response(serializer_final.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, id):
         user = request.user
