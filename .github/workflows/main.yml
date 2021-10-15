@@ -45,7 +45,7 @@ jobs:
           with:
             push: true
             context: backend
-            tags: tomsky11/foodgram_backend:latest
+            tags: tomsky11/foodgram:latest
   
   deploy:
       runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
-            cd foodgram-project-react/infra
+            cd foodgram-project-react
             sudo docker pull tomsky11/foodgram:latest
             sudo docker-compose down
             touch .env 
