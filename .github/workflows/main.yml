@@ -26,7 +26,7 @@ jobs:
 
         # запустить проверку на соответствие pep8
         python -m flake8 --ignore=E501,I001,W503,E121,E126,W504
-'''
+  '''
 
   build_and_push_to_docker_hub:
       name: Push Docker image to Docker Hub
