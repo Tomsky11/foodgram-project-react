@@ -86,15 +86,6 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-'''
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
@@ -105,7 +96,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
-'''
+
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -142,19 +133,19 @@ REST_FRAMEWORK = {
 
 
 DJOSER = {
-       'LOGIN_FIELD': 'email',
-       'SERIALIZERS': {
-           'user_create': 'users.serializers.UserRegistrationSerializer',
-           'user': 'users.serializers.CustomUserSerializer',
-           'current_user': 'users.serializers.CustomUserSerializer',
-       },
-       'USER_ID_FIELD': 'id',
-       'HIDE_USERS': False,
-       'PERMISSIONS': {
-           'user': ['rest_framework.permissions.IsAuthenticated'],
-           'user_list': ['rest_framework.permissions.AllowAny']
-       },
-   }
+    'LOGIN_FIELD': 'email',
+    'SERIALIZERS': {
+       'user_create': 'users.serializers.UserRegistrationSerializer',
+       'user': 'users.serializers.CustomUserSerializer',
+       'current_user': 'users.serializers.CustomUserSerializer',
+    },
+    'USER_ID_FIELD': 'id',
+    'HIDE_USERS': False,
+    'PERMISSIONS': {
+        'user': ['rest_framework.permissions.IsAuthenticated'],
+        'user_list': ['rest_framework.permissions.AllowAny']
+    },
+}
 
 
 # Internationalization
