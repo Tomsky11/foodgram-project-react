@@ -60,7 +60,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
-            cd foodgram-project-react/infra
             sudo docker pull tomsky11/foodgram:latest
             sudo docker-compose down
             touch .env 
