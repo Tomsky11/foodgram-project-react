@@ -45,7 +45,7 @@ jobs:
           with:
             push: true
             context: backend
-            tags: tomsky11/foodgram:latest
+            tags: ${{ secrets.DOCKER_USERNAME }}/foodgram:latest
   
   deploy:
       runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
-            sudo docker pull tomsky11/foodgram:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram:latest
             sudo docker-compose down
             touch .env 
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
