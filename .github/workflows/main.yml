@@ -2,34 +2,11 @@ name: Foodgram-project workflow
 
 on: [push]
 
-jobs:
-  tests:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
-    - name: Install dependencies
-      run: |
-        cd backend
-        python -m pip install --upgrade pip 
-        pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
-        pip install -r requirements.txt 
-
-    - name: Test with flake8
-      run: |
-
-        # запустить проверку на соответствие pep8
-        python -m flake8 --ignore=E501,I001,W503,E121,E126,W504
-  
+jobs:  
   build_and_push_to_docker_hub:
       name: Push Docker image to Docker Hub
       runs-on: ubuntu-latest
-      needs: tests
+      # needs: tests
       steps:
         - name: Check out the repo
           uses: actions/checkout@v2 # Проверяет доступность репозитория DockerHub для workflow
@@ -60,7 +37,8 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
-            cd foodgram-project-react
+            
+          # cd foodgram-project-react/infra
             sudo docker pull tomsky11/foodgram:latest
             sudo docker-compose down
             touch .env 
