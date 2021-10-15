@@ -1,12 +1,12 @@
 from django.contrib.auth import get_user_model
-from django.db.models import F
+from django.db import transaction
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 from users.serializers import CustomUserSerializer
 
-from .models import (Ingredient, Tag, Recipe, RecipeIngredients,
-                     Favorite, ShoppingList)
+from .models import (Favorite, Ingredient, Recipe, RecipeIngredients,
+                     ShoppingList, Tag)
 
 User = get_user_model()
 
@@ -105,19 +105,15 @@ class AddRecipeSerializer(serializers.ModelSerializer):
         return data
 
     def add_recipe_ingredients(self, ingredients, recipe):
-        for ingredient in ingredients:
-            ingredient_id = ingredient['id']
-            amount = ingredient['amount']
-            if RecipeIngredients.objects.filter(
-                recipe=recipe, ingredient=ingredient_id
-            ).exists():
-                amount += F('amount')
-            RecipeIngredients.objects.update_or_create(
-                recipe=recipe,
-                ingredient=ingredient_id,
-                defaults={'amount': amount}
-            )
+        add_ingredients = [
+            RecipeIngredients(recipe=recipe,
+                              ingredient=ingredient['id'],
+                              amount=ingredient['amount'],)
+            for ingredient in ingredients
+        ]
+        RecipeIngredients.objects.bulk_create(add_ingredients)
 
+    @transaction.atomic
     def create(self, validated_data):
         author = self.context.get('request').user
         tags_data = validated_data.pop('tags')
@@ -127,6 +123,7 @@ class AddRecipeSerializer(serializers.ModelSerializer):
         recipe.tags.set(tags_data)
         return recipe
 
+    @transaction.atomic
     def update(self, recipe, validated_data):
         recipe.name = validated_data.get('name', recipe.name)
         recipe.text = validated_data.get('text', recipe.text)

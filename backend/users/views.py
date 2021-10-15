@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, status, permissions
+from foodgram.pagination import CustomPageNumberPaginator
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from foodgram.pagination import CustomPageNumberPaginator
 
 from .models import Follow
 from .serializers import FollowSerializer, ShowFollowSerializer
@@ -27,11 +26,11 @@ class FollowApiView(APIView):
 
     def delete(self, request, id):
         user = request.user
-        following = get_object_or_404(User, id=id)
-        subscription = get_object_or_404(Follow, user=user,
-                                         following=following)
-        subscription.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        Follow.objects.filter(following_id=id, user=user).delete()
+        return Response(
+            {'detail': 'Подписка отменена'},
+            status=status.HTTP_204_NO_CONTENT
+        )
 
 
 class ListFollowViewSet(generics.ListAPIView):

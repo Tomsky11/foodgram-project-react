@@ -72,7 +72,7 @@ class Recipe(models.Model):
     cooking_time = models.PositiveIntegerField(
                     validators=[MinValueValidator(1)],
                     verbose_name='Время приготовления')
-    image = models.ImageField(upload_to='api_recipes/images/',
+    image = models.ImageField(upload_to='api_recipes/media/',
                               blank=False,
                               null=False,
                               verbose_name='Иллюстрация блюда')

@@ -1,5 +1,4 @@
 from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from foodgram.pagination import CustomPageNumberPaginator
 from rest_framework import mixins, permissions, status, viewsets
@@ -58,10 +57,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @favorite.mapping.delete
     def delete_favorite(self, request, pk):
         user = request.user
-        recipe = get_object_or_404(Recipe, id=pk)
-        favorite = get_object_or_404(Favorite, user=user, recipe=recipe)
-        favorite.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        Favorite.objects.filter(recipe_id=pk, user=user).delete()
+        return Response(
+            {'detail': 'Рецепт удален из избранного'},
+            status=status.HTTP_204_NO_CONTENT
+        )
 
     @action(detail=True, permission_classes=[IsAuthorOrAdmin])
     def shopping_cart(self, request, pk):
@@ -75,11 +75,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @shopping_cart.mapping.delete
     def delete_shopping_cart(self, request, pk):
         user = request.user
-        recipe = get_object_or_404(Recipe, id=pk)
-        shopping_list = get_object_or_404(ShoppingList,
-                                          user=user, recipe=recipe)
-        shopping_list.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        ShoppingList.objects.filter(recipe_id=pk, user=user).delete()
+        return Response(
+            {'detail': 'Рецепт удален из корзины'},
+            status=status.HTTP_204_NO_CONTENT
+        )
 
     @action(detail=False, permission_classes=[permissions.IsAuthenticated])
     def download_shopping_cart(self, request):
