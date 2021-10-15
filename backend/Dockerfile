@@ -3,6 +3,6 @@ FROM python:3.8.5
 WORKDIR /code
 COPY requirements.txt .
 RUN pip install -r ./requirements.txt
-COPY static ../var/html/back_static/
+COPY back_static ../var/html/back_static/
 COPY . .
 CMD gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:5000
