@@ -61,7 +61,7 @@ jobs:
           stack_file_name: docker-compose.yaml
           script: |
             sudo docker pull tomsky11/foodgram:latest
-            cd ./infra/
+            cd infra
             sudo docker-compose down
             touch .env 
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
