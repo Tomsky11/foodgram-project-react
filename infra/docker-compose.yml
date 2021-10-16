@@ -16,9 +16,9 @@ services:
     depends_on:
       - db
     env_file:
-      - ..env
+      - .env
   frontend:
-    image: tomsky11/foodgram_frontend:latest
+    image: tomsky11/foodgram_frontend:v1
     volumes:
       - frontend:/app/result_build/
   nginx:
