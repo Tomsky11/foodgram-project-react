@@ -71,6 +71,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yml
           script: |
-            cd tomsky11
+            cd home/tomsky11/
             pwd
             
