@@ -5,4 +5,4 @@ COPY requirements.txt .
 RUN pip install -r ./requirements.txt
 COPY back_static ../var/html/back_static/
 COPY . .
-CMD gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:5000
+CMD gunicorn foodgram.wsgi:application --bind 0.0.0.0:5000
