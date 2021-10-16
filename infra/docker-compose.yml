@@ -24,7 +24,7 @@ services:
       context: ../frontend
       dockerfile: Dockerfile
     volumes:
-      - frontend/:/app/result_build/
+      - frontend:/app/result_build/
   nginx:
     image: nginx:1.19.3
     ports:
@@ -43,4 +43,4 @@ volumes:
   postgres_data:
   static_value:
   media_value:
-  result_build:
+  frontend:
