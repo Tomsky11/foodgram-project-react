@@ -44,8 +44,8 @@ jobs:
           uses: docker/build-push-action@v2 # Выполняет push образа в DockerHub 
           with:
             push: true
-            context: ./backend
-            tags: ${{ secrets.DOCKER_USERNAME }}/foodgram:latest
+            context: backend
+            tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_backend:latest
   
   send_message_0:
       runs-on: ubuntu-latest
@@ -72,9 +72,9 @@ jobs:
           stack_file_name: docker-compose.yml
           script: |
             cd foodgram-project-react/infra
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_backend:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend:latest
             sudo docker-compose down
-            cd ../backend
             sudo touch .env 
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
@@ -82,7 +82,6 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            cd ../infra
             sudo docker-compose up -d
 
 
