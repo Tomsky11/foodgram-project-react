@@ -71,21 +71,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yml
           script: |
-            cd foodgram-project-react/infra
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_backend:latest
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend:v1
-            sudo docker-compose down
-            sudo touch .env 
-            sudo echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
-            sudo echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-            sudo echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
-            sudo echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
-            sudo echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-            sudo echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            sudo docker-compose up -d
-            sudo docker-compose exec -T backend python manage.py makemigrations --noinput
-            sudo docker-compose exec -T backend python manage.py migrate --noinput
-            sudo docker-compose exec -T backend python manage.py collectstatic --noinput
+            sudo pwd
 
 
   send_message:
