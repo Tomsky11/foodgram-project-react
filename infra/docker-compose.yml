@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env
+      - ../backend/.env
   frontend:
     build:
       context: ../frontend
@@ -43,3 +43,4 @@ volumes:
   postgres_data:
   static_value:
   media_value:
+  frontend/:
