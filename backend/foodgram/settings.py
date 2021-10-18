@@ -175,7 +175,7 @@ STATIC_URL = '/back_static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'back_static')
 
 MEDIA_URL = '/back_media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'back_media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'back_media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
