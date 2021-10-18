@@ -113,7 +113,7 @@ class RecipeTags(models.Model):
                             verbose_name='Тег для рецепта')
 
     class Meta:
-        verbose_name = 'Теги'
+        verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
     def __str__(self):
