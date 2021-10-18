@@ -73,7 +73,7 @@ class Recipe(models.Model):
         validators=[MinValueValidator(1)],
         verbose_name='Время приготовления'
     )
-    image = models.ImageField(upload_to='api_recipes/back_media/',
+    image = models.ImageField(upload_to='back_media/',
                               blank=False,
                               null=False,
                               verbose_name='Иллюстрация блюда')
