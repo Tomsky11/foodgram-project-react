@@ -6,7 +6,11 @@
 
 ### Технологии
 Python 3.8.5
-Django 3.0.5
+Django Rest Framework 3.11.0
+Docker
+Nginx
+Postgres
+React
 
 
 # Проект YaMDb
