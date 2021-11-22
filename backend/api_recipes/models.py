@@ -87,6 +87,7 @@ class Recipe(models.Model):
 
 
 class RecipeIngredients(models.Model):
+    '''Модель Ингредиентов для добавления в Рецепт'''
     recipe = models.ForeignKey(Recipe,
                                on_delete=models.CASCADE,
                                verbose_name='Рецепт')
@@ -105,6 +106,7 @@ class RecipeIngredients(models.Model):
 
 
 class RecipeTags(models.Model):
+    '''Можель Тегов для добавления в Рецепт'''
     recipe = models.ForeignKey(Recipe,
                                on_delete=models.CASCADE,
                                verbose_name='Рецепт')
@@ -121,6 +123,7 @@ class RecipeTags(models.Model):
 
 
 class Favorite(models.Model):
+    '''Модель для списка Избранное'''
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='favorite',
@@ -139,6 +142,7 @@ class Favorite(models.Model):
 
 
 class ShoppingList(models.Model):
+    '''Модель для добавления рецепта в список покупок'''
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='shopping_list',

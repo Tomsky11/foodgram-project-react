@@ -89,6 +89,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 def get_ingredients_list(recipes_list):
+    '''Получает Ингредиенты для списка покупок
+    с указанием количества и единиц изменерия'''
     ingredients_dict = {}
     for recipe in recipes_list:
         ingredients = RecipeIngredients.objects.filter(recipe=recipe.recipe)

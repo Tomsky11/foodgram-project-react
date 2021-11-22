@@ -25,6 +25,7 @@ class User(AbstractUser):
 
 
 class Follow(models.Model):
+    '''Модель подписки пользователей на авторов рецептов'''
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='follower',
